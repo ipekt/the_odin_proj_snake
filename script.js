@@ -137,11 +137,20 @@ reset
       return;
     }
 
+
+    //push as many as length ?
     positions.push([snake.position[0], snake.position[1]]);
 
     if (count >= snake.length) {
-      _selection(positions[count - snake.length][0], positions[count - snake.length][1], 'yellowgreen');
-
+      _selection(positions[count - snake.length][0], positions[count - snake.length][1], 'white');
+      // end game if snake eat itself
+      var lastPos = positions.length - 1;
+      for (var i = 1; i < snake.length; i++) {
+        if (positions[lastPos-i][0] === snake.position[0] && positions[lastPos-i][1] === snake.position[1]) {
+          life = false;
+          return;
+        }
+      }
     }
 
     _selection(positions[count][0], positions[count][1], 'black');
