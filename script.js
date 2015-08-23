@@ -15,7 +15,7 @@ reset
 
 */
 
-  
+
 (function () {
 
   var snake = {},
@@ -23,24 +23,27 @@ reset
     count = 1,
     movement = 1,
     positions = [],
+    directions = [],
     foodLocation;
 
-  function _selection(x, y){
-    var selection = '.row:nth-child(' + x + ') > .column:nth-child(' + y + ')';
-    var selectionNode = document.querySelectorAll(selection);
-    selectionNode[0].style.backgroundColor = "black";
+  function _selection(x, y, color) {
+    var selection,
+      selectionNode;
+
+    selection = '.row:nth-child(' + x + ') > .column:nth-child(' + y + ')';
+    selectionNode = document.querySelectorAll(selection);
+    selectionNode[0].style.backgroundColor = color;
   }
 
   function buildBoard() {
     var board, column = '',
-      row = '',
-      x = 40;
+      row = '';
 
-    for (var i = 0; i < 40; i++) {
+    for (var i = 1; i < 21; i++) {
       column += '<div class="column"></div>';
     }
 
-    for (var j = 0; j < 40; j++) {
+    for (var j = 1; j < 21; j++) {
       row += '<div class="row">' + column + '</div>';
     }
 
@@ -50,20 +53,22 @@ reset
   }
 
   function createSnake() {
-    snake.position = [20, 20];
+    snake.position = [10, 10];
     snake.direction = 'r';
-    positions.push([ snake.position[0], snake.position[1] ]);
-    
-    _selection(positions[0][0], positions[0][1]);
+    snake.length = 3;
+    directions.push(snake.direction);
+    positions.push([snake.position[0], snake.position[1]]);
+
+    _selection(positions[0][0], positions[0][1], 'black');
   }
 
   function createFood() {
-    foodLocation = [Math.floor(Math.random() * 40), Math.floor(Math.random() * 40)];
+    foodLocation = [Math.ceil(Math.random() * 20), Math.ceil(Math.random() * 20)];
 
-    _selection(foodLocation[0], foodLocation[1]);
+    _selection(foodLocation[0], foodLocation[1], 'black');
   }
 
-  
+
 
   /*
     food appears randomly
@@ -74,21 +79,38 @@ reset
   */
 
   function snakeDirection(key) {
-    if (key.keyCode === 37) {
-      console.log('left');
+    // if user pushes l-r ,r-l, u-d, d-u dont change direction
+    switch (key.keyCode) {
+    case 37:
       snake.direction = 'l';
-    } else if (key.keyCode === 38) {
-      console.log('up');
+      if (directions[0] === 'r') {
+        snake.direction = 'r';
+      }
+      break;
+
+    case 38:
+
       snake.direction = 'u';
-    } else if (key.keyCode === 39) {
-      console.log('right');
+      if (directions[0] === 'd') {
+        snake.direction = 'd';
+      }
+      break;
+
+    case 39:
+
       snake.direction = 'r';
-    } else if (key.keyCode === 40) {
-      console.log('down');
+      if (directions[0] === 'l') {
+        snake.direction = 'l';
+      }
+      break;
+    case 40:
       snake.direction = 'd';
+      if (directions[0] === 'u') {
+        snake.direction = 'u';
+      }
+      break;
     }
   }
-
 
   function moveSnake() {
 
@@ -103,27 +125,31 @@ reset
       snake.position[0] += 1;
     }
 
-   // end game if borders crossed
-    if (snake.position[0] === 0 || snake.position[0] === 41) {
+    directions[0] = snake.direction;
+
+
+    // end game if borders crossed
+    if (snake.position[0] === 0 || snake.position[0] === 21) {
       life = false;
       return;
-    } else if (snake.position[1] === 0 || snake.position[1] === 41) {
+    } else if (snake.position[1] === 0 || snake.position[1] === 21) {
       life = false;
       return;
     }
 
-    positions.push([ snake.position[0], snake.position[1] ]);
+    positions.push([snake.position[0], snake.position[1]]);
 
-    var previousLocation = '.row:nth-child(' + positions[count-1][0] + ') > .column:nth-child(' + positions[count-1][1] + ')';
-    var snakePerLocation = document.querySelectorAll(previousLocation);
-    snakePerLocation[0].style.backgroundColor = "white";
+    if (count >= snake.length) {
+      _selection(positions[count - snake.length][0], positions[count - snake.length][1], 'yellowgreen');
+
+    }
+
+    _selection(positions[count][0], positions[count][1], 'black');
 
 
-    _selection(positions[count][0], positions[count][1]);
-    
-
-    if ( positions[count][0] === foodLocation[0] && positions[count][1] === foodLocation[1] ) {
-        createFood();
+    if (positions[count][0] === foodLocation[0] && positions[count][1] === foodLocation[1]) {
+      snake.length += 1;
+      createFood();
     }
 
     count += 1;
