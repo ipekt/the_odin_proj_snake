@@ -3,51 +3,17 @@
 <head>
   <meta charset="UTF-8">
   <title>Snake Game</title>
-  
+  <link rel="stylesheet" href="style.css">
 </head>
-<style>
-  body {
-    font-family: arial, sans-serif;
-    margin: 0 auto;
-    width: 30em;
-  }
-  #board {
-    border: 3px solid black;
-    width: 440px;
-    position: absolute;
-  }
-  .column {
-    border: 1px solid rgba(211,211,211,0.19);
-    content: ' ';
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    margin: 0;
-  }
-  .column:active {
-    background: blue;
-  }
-  .row {
-    content: ' ';
-    display: flex;
-    margin: 0;
-  }
-  .snakeHead {
-    background: black;
-  }
-  .gameover {
-    right: -34%;
-    bottom: -56px;
-    position: relative;
-    color: black;
-    font-size: 2em;
-    height: 100%;
-    z-index: 1;
-  }
-</style>
 <body>
+  <div class="wrapper">
   <h1>Snake Game</h1>
+  <div class="buttons">
+    <button id="start">Start</button>
+  </div>
+  <div class="gameover hide">Game Over</div>
   <div id="board"></div>
+  </div>
 </body>
 <script src="script.js"></script>
 </html>

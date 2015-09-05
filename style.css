@@ -1,0 +1,88 @@
+body {
+  font-family: arial, sans-serif;
+  background-image: url('snake.png');
+  background-repeat: no-repeat;
+  background-position: 40% 50%;
+}
+
+.wrapper {   
+ margin: 0 auto;
+ width: 27.5em;
+}
+h1 {
+  font-size: 4.5em;
+  margin: 0;
+}
+  
+#board {
+  border: 3px solid black;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 440px;
+  background-color: rgba(255, 255, 255, 0.50);
+}
+
+.column {
+  border: 1px solid rgba(211,211,211,0.19);
+  content: ' ';
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: inline-block;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.50);
+}
+
+.row {
+  content: ' ';
+  display: flex;
+  margin: 0;
+  background-color: rgba(255, 255, 255, 0.50);
+}
+  
+.snakeHead {
+  background: black;
+}
+
+.gameover {
+  position: absolute;
+  color: rgba(255, 0, 0, 0.75);
+  font-size: 4em;
+  z-index: 1;
+  right: -50%;
+  left: 38%;
+  top: 45%;
+  bottom: 50%;
+  font-family: fantasy;
+}
+  
+
+#start {
+  border: 3px solid #A7DD2E;
+  background: transparent;
+  -webkit-border-radius: 18;
+  -moz-border-radius: 18;
+  border-radius: 25px;
+  color: #A7DD2E;
+  font-size: 1.2em;
+  padding: 0.4em 1.6em;
+  text-decoration: none;
+  margin: 0.5em 0.25em;
+  outline: 0;
+}
+
+#start:hover {
+  background: #A8DE2E;
+  color: #fff;
+  text-decoration: none;
+}
+.buttons {
+  margin: 0 auto;
+  text-align: center;
+}
+
+.hide {
+  display: none;
+}
+

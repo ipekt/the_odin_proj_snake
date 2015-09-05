@@ -15,7 +15,6 @@ reset
 
 */
 
-
 (function () {
 
   var snake = {},
@@ -25,6 +24,9 @@ reset
     positions = [],
     directions = [],
     foodLocation;
+
+  var start = document.getElementById('start'),
+    message = document.getElementsByClassName('gameover');
 
   function _selection(x, y, color) {
     var selection,
@@ -67,16 +69,6 @@ reset
 
     _selection(foodLocation[0], foodLocation[1], 'black');
   }
-
-
-
-  /*
-    food appears randomly
-    if snake crosses through food loc, grows.
-    food dissappears
-    food appears in another location
-
-  */
 
   function snakeDirection(key) {
     // if user pushes l-r ,r-l, u-d, d-u dont change direction
@@ -127,7 +119,6 @@ reset
 
     directions[0] = snake.direction;
 
-
     // end game if borders crossed
     if (snake.position[0] === 0 || snake.position[0] === 21) {
       life = false;
@@ -137,12 +128,11 @@ reset
       return;
     }
 
-
-    //push as many as length ?
+    //push as many as length
     positions.push([snake.position[0], snake.position[1]]);
 
     if (count >= snake.length) {
-      _selection(positions[count - snake.length][0], positions[count - snake.length][1], 'white');
+      _selection(positions[count - snake.length][0], positions[count - snake.length][1], 'rgba(255, 255, 255, 0.50)');
       // end game if snake eat itself
       var lastPos = positions.length - 1;
       for (var i = 1; i < snake.length; i++) {
@@ -155,7 +145,6 @@ reset
 
     _selection(positions[count][0], positions[count][1], 'black');
 
-
     if (positions[count][0] === foodLocation[0] && positions[count][1] === foodLocation[1]) {
       snake.length += 1;
       createFood();
@@ -164,12 +153,6 @@ reset
     count += 1;
   }
 
-
-
-
-  // Listen arrow keys 
-  document.addEventListener('keydown', snakeDirection);
-
   // Create synchronous time loop
   function timeout() {
     setTimeout(function () {
@@ -177,21 +160,46 @@ reset
         moveSnake();
         timeout();
       } else {
-        var message = document.createElement('div');
-        message.className = 'gameover';
-        message.innerHTML = 'Game Over';
-        var body = document.getElementsByTagName('body');
-        document.body.appendChild(message);
+        message[0].classList.remove('hide');
       }
     }, 100);
   }
 
+  function reset () {
+    count = 1;
+    movement = 1;
+    positions = [];
+    directions = [];
 
+    message[0].classList.add('hide');
+    life = true;
+    buildBoard();
+    createSnake();
+    createFood();
+    timeout();
+    console.log('reset ');
+  }
 
+  function init () {
+    start.innerHTML = 'New Game';
+    createSnake();
+    createFood();
+    timeout();
+    console.log('init');
+  }
+
+  start.addEventListener('click', function() {
+    if (life) {
+      init();
+    } else {
+      reset();
+    }
+  });
+  
   buildBoard();
-  createSnake();
-  timeout();
-  createFood();
 
-
+ 
+  
+  // Listen arrow keys 
+  document.addEventListener('keydown', snakeDirection);
 })();
