@@ -3,4 +3,4 @@
 http://www.theodinproject.com/javascript-and-jquery/jquery-and-the-dom
 
 
-![Alt text](/Screenshot 2015-09-05 12.39.28.png "Snake Game")
+![Alt text](/game_screenshot.png "Snake Game")
