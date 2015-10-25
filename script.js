@@ -28,6 +28,7 @@ reset
   var start = document.getElementById('start'),
     message = document.getElementsByClassName('gameover');
 
+
   function _selection(x, y, color) {
     var selection,
       selectionNode;
@@ -136,7 +137,7 @@ reset
       // end game if snake eat itself
       var lastPos = positions.length - 1;
       for (var i = 1; i < snake.length; i++) {
-        if (positions[lastPos-i][0] === snake.position[0] && positions[lastPos-i][1] === snake.position[1]) {
+        if (positions[lastPos - i][0] === snake.position[0] && positions[lastPos - i][1] === snake.position[1]) {
           life = false;
           return;
         }
@@ -165,7 +166,7 @@ reset
     }, 100);
   }
 
-  function reset () {
+  function reset() {
     count = 1;
     movement = 1;
     positions = [];
@@ -180,7 +181,7 @@ reset
     console.log('reset ');
   }
 
-  function init () {
+  function init() {
     start.innerHTML = 'New Game';
     createSnake();
     createFood();
@@ -188,18 +189,18 @@ reset
     console.log('init');
   }
 
-  start.addEventListener('click', function() {
+  start.addEventListener('click', function () {
     if (life) {
       init();
     } else {
       reset();
     }
   });
-  
+
   buildBoard();
 
- 
-  
+
+
   // Listen arrow keys 
   document.addEventListener('keydown', snakeDirection);
 })();
